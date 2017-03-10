@@ -36,9 +36,9 @@
     sh =  show --stat
 [core]
     whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
-    excludesfile = $HOME/.gitignore_global
+    excludesfile = ~/.gitignore_global
 [include]
-    path = $HOME/.gitconfig.local
+    path = ~/.gitconfig.local
 [filter "lfs"]
     clean = git lfs clean %f
     smudge = git lfs smudge %f
