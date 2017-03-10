@@ -1,0 +1,47 @@
+[color]
+    branch = auto
+    diff = auto
+    status = auto
+    ui = true
+    interactive = auto
+    grep = auto
+[color "branch"]
+    current = yellow reverse
+    local = yellow bold
+    remote = green bold
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = cyan bold
+[color "status"]
+    added = yellow bold
+    changed = red bold
+    untracked = cyan bold
+[alias]
+    logpretty = log --graph --decorate --pretty=oneline --abbrev-commit
+    fo = fetch origin
+    pom = pull --rebase origin master
+    cm = commit -am
+    pr = pull --rebase
+    br = branch
+    cb = checkout -b
+    cl = clean -df
+    remotes = remote -v
+    co = checkout
+    s = status
+    hreset = reset --hard
+    ireb = rebase -i
+    nffmerge =  merge --no-ff
+    sh =  show --stat
+[core]
+    whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
+    excludesfile = $HOME/.gitignore_global
+[include]
+    path = $HOME/.gitconfig.local
+[filter "lfs"]
+    clean = git lfs clean %f
+    smudge = git lfs smudge %f
+    required = true
+[push]
+    default = simple

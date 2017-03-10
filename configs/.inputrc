@@ -1,0 +1,29 @@
+# Make Tab autocomplete regardless of filename case (cd ~/dow<Tab> => cd ~/Downloads/)
+set completion-ignore-case on
+
+# Do not expand "~" to the home directory when completing. (The actual value passed on to the command still is expanded,
+# though. Which is good.) "Off" is the default value, but some servers override this
+set expand-tilde off
+
+# Show extra file information when completing, like `ls -F` does
+set visible-stats on
+
+# Allow UTF-8 input and output, instead of showing stuff like $'\0123\0456'
+set input-meta on
+set output-meta on
+set convert-meta off
+
+# Disable beeping and window flashing
+set bell-style none
+
+# If there are more than 200 possible completions for a word, ask to show them all
+set completion-query-items 50
+
+# Do not autocomplete hidden files ("dot files") unless the pattern explicitly begins with a dot
+set match-hidden-files off
+
+# Auto list all TAB possible completions (use instead of TAB-cycling)
+set show-all-if-ambiguous on
+
+# Show extra file information when completing, like `ls -F` does
+set visible-stats on

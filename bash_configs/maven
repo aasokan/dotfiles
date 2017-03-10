@@ -1,0 +1,17 @@
+
+function cur_mvn { if [ -f "./mvnw" ]; then ./mvnw; else mvn; fi;}
+
+alias mvnci='cur_mvn clean install'
+alias mvni='cur_mvn install'
+alias mvndep='cur_mvn dependency:tree'
+alias mvnct='cur_mvn clean test'
+alias mvnt='cur_mvn test'
+alias mpom='cur_mvn help:effective-pom'
+alias mvncp='cur_mvn clean package'
+alias mvncpnt='cur_mvn clean package -DskipTests'
+alias mvndocs='cur_mvn javadoc:javadoc'
+alias mvn-updates='cur_mvn versions:display-dependency-updates'
+
+alias mrprep='cur_mvn release:prepare'
+alias mrperf='cur_mvn release:perform'
+alias mrrb='cur_mvn release:rollback'

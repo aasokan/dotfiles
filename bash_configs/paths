@@ -1,0 +1,16 @@
+
+# Java Home for MAC
+export JAVA_HOME=/usr/lib/jvm/java-8-oracle-1.8.0.20/
+
+# Override JAVA_HOME
+if [[ "$OSTYPE" == darwin* ]]; then
+  export JAVA_HOME=$(/usr/libexec/java_home)
+fi;
+
+MACPORT_PATHS="/opt/local/bin:/opt/local/sbin::/usr/local/bin/"
+JAVA_PATH="$JAVA_HOME/bin"
+USER_PATHS="/usr/local/bin/:/usr/bin:/bin:/usr/sbin:/sbin"
+LOCAL_SCRIPTS="$DOTFILES_PATH/handy_scripts"
+
+# FINAL PATH
+export PATH=$USER_PATHS:$MACPORT_PATHS:$JAVA_PATH:$LOCAL_SCRIPTS:$PATH

@@ -1,0 +1,11 @@
+# Disable the startup message
+startup_message off
+
+shelltitle "Screen"
+
+term xterm-256color
+# Set the default character encoding to UTF-8
+defutf8 on
+
+defscrollback 50000
+setenv IN_SCREEN "true"

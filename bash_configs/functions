@@ -1,0 +1,129 @@
+# List Process ids
+function list_pids ()
+{
+    ps aux | grep $1 |  grep -v grep | awk '{print $2}'
+}
+
+# Kill Process ids interactively
+function kill_pids ()
+{
+    echo "Process Ids matching $1"
+    ps aux | grep $1 |  grep -v grep | awk '{print $2}'
+    read -p "Okay with killing these ?" yn
+    case $yn in
+        [Yy]* ) ps aux | grep $1 |  grep -v grep | awk '{print $2}' |  xargs kill -9; break;;
+        [Nn]* ) exit;;
+        * ) exit;;
+    esac
+}
+
+# MyIps
+# display all ip addresses for this host
+function ips ()
+{
+    if command -v ifconfig &>/dev/null
+    then
+        ifconfig | awk '/inet /{ print $2 }'
+    elif command -v ip &>/dev/null
+    then
+        ip addr | grep -oP 'inet \K[\d.]+'
+    else
+        echo "You don't have ifconfig or ip command installed!"
+    fi
+}
+
+# displays your ip address, as seen by the Internet
+function myip ()
+{
+    res=$(curl -s checkip.dyndns.org | grep -Eo '[0-9\.]+')
+    echo -e "Your public IP is: ${echo_bold_green} $res ${echo_normal}"
+}
+
+# Extract Compressed Files
+extract () {
+  if [ $# -ne 1 ]
+  then
+    echo "Error: No file specified."
+    return 1
+  fi
+	if [ -f $1 ] ; then
+		case $1 in
+			*.tar.bz2) tar xvjf $1   ;;
+			*.tar.gz)  tar xvzf $1   ;;
+			*.bz2)     bunzip2 $1    ;;
+			*.rar)     unrar x $1    ;;
+			*.gz)      gunzip $1     ;;
+			*.tar)     tar xvf $1    ;;
+			*.tbz2)    tar xvjf $1   ;;
+			*.tgz)     tar xvzf $1   ;;
+			*.zip)     unzip $1      ;;
+			*.Z)       uncompress $1 ;;
+			*.7z)      7z x $1       ;;
+			*)         echo "'$1' cannot be extracted via extract" ;;
+		esac
+	else
+		echo "'$1' is not a valid file"
+	fi
+}
+
+# Git
+# display stats per author
+function git_stats {
+# awesome work from https://github.com/esc/git-stats
+# including some modifications
+
+if [ -n "$(git symbolic-ref HEAD 2> /dev/null)" ]; then
+    echo "Number of commits per author:"
+    git --no-pager shortlog -sn --all
+    AUTHORS=$( git shortlog -sn --all | cut -f2 | cut -f1 -d' ')
+    LOGOPTS=""
+    if [ "$1" == '-w' ]; then
+        LOGOPTS="$LOGOPTS -w"
+        shift
+    fi
+    if [ "$1" == '-M' ]; then
+        LOGOPTS="$LOGOPTS -M"
+        shift
+    fi
+    if [ "$1" == '-C' ]; then
+        LOGOPTS="$LOGOPTS -C --find-copies-harder"
+        shift
+    fi
+    for a in $AUTHORS
+    do
+        echo '-------------------'
+        echo "Statistics for: $a"
+        echo -n "Number of files changed: "
+        git log $LOGOPTS --all --numstat --format="%n" --author=$a | cut -f3 | sort -iu | wc -l
+        echo -n "Number of lines added: "
+        git log $LOGOPTS --all --numstat --format="%n" --author=$a | cut -f1 | awk '{s+=$1} END {print s}'
+        echo -n "Number of lines deleted: "
+        git log $LOGOPTS --all --numstat --format="%n" --author=$a | cut -f2 | awk '{s+=$1} END {print s}'
+        echo -n "Number of merges: "
+        git log $LOGOPTS --all --merges --author=$a | grep -c '^commit'
+    done
+else
+    echo "you're currently not in a git repository"
+fi
+}
+
+# Pygmentize
+if $(command -v pygmentize &> /dev/null) ; then
+  # get the full paths to binaries
+  CAT_BIN=$(which cat)
+  LESS_BIN=$(which less)
+
+  # pigmentize cat and less outputs
+  function ccat()
+  {
+      for var;
+      do
+          pygmentize -O style=monokai -f terminal -g "$var" 2>/dev/null || "$CAT_BIN" "$var";
+      done
+  }
+
+  function cless()
+  {
+      pygmentize -g $* | "$LESS_BIN" -R
+  }
+fi

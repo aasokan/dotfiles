@@ -1,0 +1,14 @@
+# Functions for enabling and disabling SOCKS Proxy
+function disable_proxy {
+  sudo networksetup -setsocksfirewallproxystate Wi-Fi off
+  sudo networksetup -setsocksfirewallproxystate "USB Ethernet Adapter" off
+  echo "SOCKS proxy disabled."
+}
+
+function enable_proxy {
+  sudo networksetup -setsocksfirewallproxy Wi-Fi 127.0.0.1 8080
+  sudo networksetup -setsocksfirewallproxy "USB Ethernet Adapter" 127.0.0.1 8080
+  sudo networksetup -setsocksfirewallproxystate Wi-Fi on
+  sudo networksetup -setsocksfirewallproxystate "USB Ethernet Adapter" on
+  echo "SOCKS proxy enabled."
+}
